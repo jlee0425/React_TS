@@ -30,6 +30,16 @@
     "api": {
       "tags": []
     },
+    "data-access": {
+      "tags": []
+    },
+    "rnapp": {
+      "tags": []
+    },
+    "rnapp-e2e": {
+      "tags": [],
+      "implicitDependencies": ["rnapp"]
+    },
     "shared-types": {
       "tags": []
     },

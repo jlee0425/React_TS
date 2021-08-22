@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mp-toods/data-access": ["libs/data-access/src/index.ts"],
       "@mp-toods/shared-types": ["libs/shared-types/src/index.ts"]
     }
   },
