@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 export interface Drink {
   name: string;
   producerName: string;
@@ -32,8 +33,19 @@ const useFetchData = <Payload extends unknown>(
 
 const CustomHookComp = () => {
   const { data, done } = useFetchData<Drink>('/drinks.json');
+  const portlandTaps = useMemo(
+    () =>
+      (data || []).filter(drink => drink.producerLocation.includes('Portland')),
+    [data]
+  );
 
-  return <div>{done && <img alt='Drink Logo' src={data![0].logo} />}</div>;
+  return (
+    <div>
+      {done && portlandTaps.length && (
+        <img alt='Drink Logo' src={portlandTaps![0].logo} />
+      )}
+    </div>
+  );
 };
 
 export default CustomHookComp;

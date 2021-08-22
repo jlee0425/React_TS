@@ -1,4 +1,5 @@
 import CustomHookComp from './components/CustomHookComp';
+import RComp from './components/RComp';
 import UseContextComponent from './components/UseContextComponent';
 import UseEffectComponent from './components/UseEffectComponent';
 import UseReducerComponent from './components/UseReducerComponent';
@@ -8,6 +9,8 @@ import UseStateComponents from './components/UseStateComponents';
 function App () {
   return (
     <div>
+      <h1>React Component</h1>
+      <RComp />
       <h1>CustomHook</h1>
       <CustomHookComp />
       <h1>useState</h1>
