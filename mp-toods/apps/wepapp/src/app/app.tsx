@@ -1,49 +1,18 @@
-import {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  SyntheticEvent
-} from 'react';
+import { useTodos } from '@mp-toods/data-access';
+import { useCallback, useRef } from 'react';
 import styles from './app.module.css';
-import { Todo } from '@mp-toods/shared-types';
-import { ReactComponent as Logo } from './logo.svg';
-import star from './star.svg';
-import axios from 'axios';
 
 const API_URL = 'http://localhost:3333/api';
 export function App () {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const getTodos = useCallback(async () => {
-    const response = await axios.get<Todo[]>(API_URL);
-    setTodos(response.data);
-  }, []);
-
-  useEffect(() => {
-    getTodos();
-  }, [getTodos]);
+  const { todos, addTodo, toggleTodo } = useTodos();
 
   const textInputRef = useRef<HTMLInputElement>(null);
   const onAddTodo = useCallback(async () => {
     if (textInputRef.current) {
-      await axios.post(API_URL, {
-        text: textInputRef.current.value
-      });
+      await addTodo(textInputRef.current.value);
       textInputRef.current.value = '';
-      getTodos();
     }
-  }, [getTodos]);
-
-  const onToggle = useCallback(
-    async (id: number) => {
-      await axios.post(`${API_URL}/setDone`, {
-        id: id,
-        done: !todos.find(todo => todo.id === id)?.done
-      });
-      getTodos();
-    },
-    [todos, getTodos]
-  );
+  }, [addTodo]);
 
   return (
     <div className={styles.app}>
@@ -53,7 +22,7 @@ export function App () {
             <input
               type='checkbox'
               checked={todo.done}
-              onChange={() => onToggle(todo.id)}
+              onChange={() => toggleTodo(todo.id)}
             />
             {todo.text}
           </div>
